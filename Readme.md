@@ -3,25 +3,25 @@
 A production-ready web application that helps farmers visualize their crop locations by uploading geo-tagged plant images and displaying them on an interactive farm map.
 
 ## 🌟 Live Demo
-[View Live Demo](#) | [Watch Demo Video](#)
+[View Live Demo]()
 
 ---
 
 ## 📋 Table of Contents
 
-- [Overview](#overview)
-- [Features](#features)
-- [Tech Stack](#tech-stack)
-- [Project Structure](#project-structure)
-- [Getting Started](#getting-started)
-- [Environment Variables](#environment-variables)
-- [API Integration](#api-integration)
-- [Architecture](#architecture)
-- [Performance Optimizations](#performance-optimizations)
-- [Deployment](#deployment)
-- [Screenshots](#screenshots)
-- [Challenges & Solutions](#challenges--solutions)
-- [Future Enhancements](#future-enhancements)
+- Overview
+- Features
+- Tech Stack
+- Project Structure
+- Getting Started
+- Environment Variables
+- API Integration
+- Architecture
+- Performance Optimizations
+- Deployment
+- Screenshots
+- Challenges & Solutions
+- Future Enhancements
 
 ## 🎯 Overview
 
