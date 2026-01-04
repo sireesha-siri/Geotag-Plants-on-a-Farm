@@ -1,0 +1,9 @@
+# Cloudinary Configuration
+VITE_CLOUDINARY_CLOUD_NAME=your_cloud_name_here
+VITE_CLOUDINARY_UPLOAD_PRESET=your_upload_preset_here
+
+# API Configuration
+VITE_API_BASE_URL=https://api.alumnx.com/api/hackathons
+
+# User Configuration
+VITE_USER_EMAIL=your_registered_email@gmail.com
