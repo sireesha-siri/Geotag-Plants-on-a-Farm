@@ -45,6 +45,10 @@ const MapController = ({ selectedPlant, plants, triggerFitBounds }) => {
   const map = useMap();
 
   useEffect(() => {
+    // Configure map for smooth zooming at cursor position
+    map.options.wheelDebounceTime = 40;
+    map.options.wheelPxPerZoomLevel = 60;
+    
     if (selectedPlant) {
       // Zoom to specific plant with smooth animation
       map.flyTo(
@@ -404,6 +408,13 @@ const FarmMap = () => {
           className="w-full h-full rounded-lg"
           zoomControl={true}
           scrollWheelZoom={true}
+          wheelDebounceTime={40}
+          wheelPxPerZoomLevel={60}
+          dragging={true}
+          touchZoom={true}
+          doubleClickZoom={true}
+          boxZoom={true}
+          keyboard={true}
         >
           <TileLayer
             url={tileLayer}
