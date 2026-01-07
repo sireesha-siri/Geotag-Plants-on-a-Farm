@@ -1,15 +1,21 @@
 // Map configuration constants for Leaflet map setup
 export const MAP_CONFIG = {
-  DEFAULT_CENTER: [15.97, 79.28], // Default map center coordinates [lat, lng]
-  DEFAULT_ZOOM: 15, // Default zoom level
-  MIN_ZOOM: 10, // Minimum allowed zoom level
-  MAX_ZOOM: 18, // Maximum allowed zoom level
+  DEFAULT_CENTER: [15.97, 79.28],
+  DEFAULT_ZOOM: 15,
+  MIN_ZOOM: 1,
+  MAX_ZOOM: 22, // Realistic max zoom for satellite imagery
 };
 
 // Tile layer URLs for different map themes
 export const TILE_LAYERS = {
-  light: 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', // Light theme tiles from OpenStreetMap
-  dark: 'https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', // Dark theme tiles from CartoDB
+  light: 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
+  dark: 'https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png',
+  // Add satellite imagery with higher zoom levels
+  satellite: 'https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}',
+  // Alternative: Google Satellite (higher quality)
+  googleSatellite: 'https://mt1.google.com/vt/lyrs=s&x={x}&y={y}&z={z}',
+  // Hybrid (satellite + labels)
+  googleHybrid: 'https://mt1.google.com/vt/lyrs=y&x={x}&y={y}&z={z}',
 };
 
 // File validation constants for image uploads
