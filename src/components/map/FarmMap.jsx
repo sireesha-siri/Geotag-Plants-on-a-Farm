@@ -1,7 +1,28 @@
 import React, { useEffect, useState, useRef } from 'react';
 import { MapContainer, TileLayer, Marker, Popup, useMap } from 'react-leaflet';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Trash2, Image as ImageIcon, MapPin, ZoomIn, Search, X, Locate } from 'lucide-react';
+import { 
+  Trash2, 
+  Image as ImageIcon, 
+  MapPin, 
+  ZoomIn, 
+  Search, 
+  X, 
+  Locate,
+  Satellite,
+  Map as MapIcon,
+  Moon,
+  Sun,
+  Layers,
+  Navigation,
+  Info,
+  List,
+  Eye,
+  EyeOff,
+  Calendar,
+  Filter,
+  Lightbulb
+} from 'lucide-react';
 import { toast } from 'react-toastify';
 import L from 'leaflet';
 import 'leaflet/dist/leaflet.css';
@@ -99,7 +120,7 @@ const PlantListSidebar = ({ plants, selectedPlant, onSelectPlant, onClose }) => 
       {/* Header */}
       <div className="flex items-center justify-between p-4 border-b border-gray-200 dark:border-gray-700">
         <h2 className="flex items-center gap-2 text-xl font-bold text-gray-900 dark:text-white">
-          <MapPin className="w-5 h-5" />
+          <List className="w-5 h-5" />
           All Plants
         </h2>
         <button
@@ -122,7 +143,8 @@ const PlantListSidebar = ({ plants, selectedPlant, onSelectPlant, onClose }) => 
             className="w-full py-2 pl-10 pr-4 text-sm bg-white border border-gray-300 rounded-lg dark:border-gray-600 dark:bg-gray-700 focus:ring-2 focus:ring-primary-500 focus:outline-none"
           />
         </div>
-        <p className="mt-2 text-xs text-gray-500 dark:text-gray-400">
+        <p className="flex items-center gap-1 mt-2 text-xs text-gray-500 dark:text-gray-400">
+          <MapPin className="w-3 h-3" />
           {filteredPlants.length} of {plants.length} plants
         </p>
       </div>
@@ -162,11 +184,13 @@ const PlantListSidebar = ({ plants, selectedPlant, onSelectPlant, onClose }) => 
                   <p className="text-sm font-semibold text-gray-900 truncate dark:text-white">
                     {plant.imageName}
                   </p>
-                  <p className="text-xs text-gray-500 dark:text-gray-400">
+                  <p className="flex items-center gap-1 text-xs text-gray-500 dark:text-gray-400">
+                    <Navigation className="w-3 h-3" />
                     {formatCoordinates(plant.latitude, plant.longitude)}
                   </p>
-                  <p className="text-xs text-primary-600 dark:text-primary-400 mt-0.5">
-                    📍 Click to zoom
+                  <p className="text-xs text-primary-600 dark:text-primary-400 mt-0.5 flex items-center gap-1">
+                    <ZoomIn className="w-3 h-3" />
+                    Click to zoom
                   </p>
                 </div>
               </div>
@@ -215,6 +239,20 @@ const FarmMap = () => {
   };
 
   const tileLayer = getTileLayer();
+
+  // Get map type icon
+  const getMapTypeIcon = () => {
+    switch(mapType) {
+      case 'satellite':
+        return <Satellite className="w-4 h-4" />;
+      case 'hybrid':
+        return <Layers className="w-4 h-4" />;
+      case 'dark':
+        return <Moon className="w-4 h-4" />;
+      default:
+        return <Sun className="w-4 h-4" />;
+    }
+  };
 
   /**
    * Handle plant deletion
@@ -296,10 +334,12 @@ const FarmMap = () => {
       <div className="px-6 py-4 bg-white border-b border-gray-200 dark:bg-gray-800 dark:border-gray-700">
         <div className="flex items-center justify-between">
           <div>
-            <h1 className="text-2xl font-bold text-gray-900 dark:text-white">
+            <h1 className="flex items-center gap-2 text-2xl font-bold text-gray-900 dark:text-white">
+              <MapIcon className="w-6 h-6" />
               Farm Map
             </h1>
-            <p className="mt-1 text-sm text-gray-500 dark:text-gray-400">
+            <p className="flex items-center gap-1 mt-1 text-sm text-gray-500 dark:text-gray-400">
+              <MapPin className="w-4 h-4" />
               {filteredPlants.length} plant{filteredPlants.length !== 1 ? 's' : ''} on your farm
             </p>
           </div>
@@ -310,20 +350,26 @@ const FarmMap = () => {
               onClick={() => setShowPlantList(!showPlantList)}
               className="flex items-center gap-2 px-4 py-2 font-medium text-white transition-colors rounded-lg shadow-lg bg-primary-600 hover:bg-primary-700"
             >
-              {showPlantList ? 'Hide' : 'Show'} Plant List
+              {showPlantList ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
+              {showPlantList ? 'Hide' : 'Show'} List
             </button>
 
             {/* Map Type Selector */}
-            <select
-              value={mapType}
-              onChange={(e) => setMapType(e.target.value)}
-              className="px-4 py-2 font-medium text-white transition-colors rounded-lg shadow-lg cursor-pointer bg-primary-600 hover:bg-primary-700"
-            >
-              <option value="satellite">🛰️ Satellite</option>
-              <option value="hybrid">🗺️ Hybrid</option>
-              <option value="light">☀️ Street Map</option>
-              <option value="dark">🌙 Dark Map</option>
-            </select>
+            <div className="relative">
+              <select
+                value={mapType}
+                onChange={(e) => setMapType(e.target.value)}
+                className="flex items-center gap-2 px-4 py-2 pr-10 font-medium text-white transition-colors rounded-lg shadow-lg appearance-none cursor-pointer bg-primary-600 hover:bg-primary-700"
+              >
+                <option value="satellite">Satellite</option>
+                <option value="hybrid">Hybrid</option>
+                <option value="light">Street</option>
+                <option value="dark">Dark</option>
+              </select>
+              <div className="absolute text-white transform -translate-y-1/2 pointer-events-none right-3 top-1/2">
+                {getMapTypeIcon()}
+              </div>
+            </div>
 
             {/* Reset View Button */}
             {selectedPlant && (
@@ -332,16 +378,17 @@ const FarmMap = () => {
                 className="flex items-center gap-2 px-4 py-2 font-medium text-white transition-colors rounded-lg bg-amber-600 hover:bg-amber-700"
               >
                 <Locate className="w-4 h-4" />
-                View All Plants
+                View All
               </button>
             )}
 
             {/* Filters Button */}
             <button
               onClick={() => setIsFilterOpen(!isFilterOpen)}
-              className="px-4 py-2 text-white transition-colors rounded-lg bg-secondary-600 hover:bg-secondary-700"
+              className="flex items-center gap-2 px-4 py-2 text-white transition-colors rounded-lg bg-secondary-600 hover:bg-secondary-700"
             >
-              Filters {isFilterOpen ? '▼' : '▶'}
+              <Filter className="w-4 h-4" />
+              Filters
             </button>
           </div>
         </div>
@@ -361,10 +408,12 @@ const FarmMap = () => {
               />
             </div>
             <div className="flex-1">
-              <p className="text-sm font-medium text-gray-900 dark:text-white">
+              <p className="flex items-center gap-2 text-sm font-medium text-gray-900 dark:text-white">
+                <Eye className="w-4 h-4" />
                 Viewing: {selectedPlant.imageName}
               </p>
-              <p className="text-xs text-gray-600 dark:text-gray-400">
+              <p className="flex items-center gap-1 text-xs text-gray-600 dark:text-gray-400">
+                <Navigation className="w-3 h-3" />
                 {formatCoordinates(selectedPlant.latitude, selectedPlant.longitude)}
               </p>
             </div>
@@ -455,11 +504,11 @@ const FarmMap = () => {
                   {/* Plant details */}
                   <div className="mb-3 space-y-1 text-sm text-gray-600 dark:text-gray-400">
                     <p className="flex items-center gap-2">
-                      <MapPin className="w-4 h-4" />
+                      <Navigation className="w-4 h-4" />
                       {formatCoordinates(plant.latitude, plant.longitude)}
                     </p>
                     <p className="flex items-center gap-2">
-                      <ImageIcon className="w-4 h-4" />
+                      <Calendar className="w-4 h-4" />
                       Uploaded {formatDate(plant.uploadedAt)}
                     </p>
                   </div>
@@ -503,8 +552,11 @@ const FarmMap = () => {
           {/* Info message */}
           {filteredPlants.length > 50 && (
             <div className="absolute z-[1000] p-4 bg-white rounded-lg shadow-lg bottom-4 left-4 dark:bg-gray-800 max-w-xs">
-              <p className="text-sm text-gray-700 dark:text-gray-300">
-                💡 Tip: You have {filteredPlants.length} plants. Use the "Show Plant List" button or search to quickly find specific plants!
+              <p className="flex items-start gap-2 text-sm text-gray-700 dark:text-gray-300">
+                <Lightbulb className="w-5 h-5 flex-shrink-0 text-amber-500 mt-0.5" />
+                <span>
+                  <strong>Tip:</strong> You have {filteredPlants.length} plants. Use the "Show List" button or search to quickly find specific plants!
+                </span>
               </p>
             </div>
           )}
